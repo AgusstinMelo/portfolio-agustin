@@ -900,10 +900,10 @@ main > section,
 
 /* Definitive compact size for the complete workspace component. */
 .hero__workbench {
-  width: min(100%, 38rem);
+  width: min(100%, 42rem);
   justify-self: end;
   margin-inline: auto;
-  padding: .5rem 0 2.5rem;
+  padding: .5rem 0 0rem;
 }
 
 .hero__editor { width: 100%; }
@@ -917,11 +917,11 @@ main > section,
 }
 
 .code-lines {
-  height: 14.5rem;
+  height: 18rem;
   min-height: 0;
   padding-block: .35rem;
   overflow: hidden;
-  font-size: .56rem;
+  font-size: .66rem;
   line-height: 1.35;
 }
 
@@ -930,7 +930,7 @@ main > section,
 .workflow-panel {
   right: -.75rem;
   bottom: 2.5rem;
-  width: min(13.5rem, 46%);
+  width: min(15rem, 46%);
 }
 
 .workflow-panel__header { height: 1.7rem; }
@@ -939,7 +939,7 @@ main > section,
 .workflow-step {
   grid-template-columns: 1.15rem 1fr auto;
   gap: .25rem;
-  min-height: 1.85rem;
+  min-height: 2rem;
   padding: .12rem .28rem;
 }
 
