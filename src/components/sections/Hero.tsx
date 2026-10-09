@@ -17,8 +17,7 @@ export function Hero() {
         <div className="hero__copy">
           <p className="hero__hello reveal"><span>01</span> {t('hero.hello')}</p>
           <h1 id="hero-title" className="reveal reveal--delay-1">
-            {t('hero.line1')} <em>{t('hero.idea')}</em><br />
-            {t('hero.line2')}<br />
+            {t('hero.line1')} <em>{t('hero.idea')} </em>{t('hero.line2')}<br />
             <strong>{t('hero.line3')}</strong>
           </h1>
           <p className="hero__description reveal reveal--delay-2">

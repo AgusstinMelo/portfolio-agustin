@@ -16,7 +16,7 @@ export function Header() {
   return (
     <header className="header">
       <a className="brand" href="#inicio" aria-label={t('nav.home')}>
-        <span>A</span>gustín<span className="brand__dot">.</span>
+        Agustín Melo<span className="brand__dot">.</span>
         <small>dev</small>
       </a>
 

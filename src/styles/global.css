@@ -39,7 +39,6 @@ button { color: inherit; font: inherit; }
 
 .header { position: absolute; z-index: 20; top: 0; left: 0; width: 100%; height: 6rem; display: flex; align-items: center; justify-content: space-between; padding: 0 var(--page-padding); color: var(--lily); border-bottom: 1px solid var(--line-light); }
 .brand { position: relative; z-index: 22; font: 600 1.25rem/1 var(--font-display); letter-spacing: -.04em; }
-.brand > span:first-child { display: inline-grid; width: 1.65rem; height: 1.65rem; place-items: center; color: var(--night); background: var(--foxglove); border-radius: 50%; margin-right: .05rem; }
 .brand__dot { color: var(--foxglove); }
 .nav ul { display: flex; align-items: center; gap: clamp(1.5rem, 3vw, 3.5rem); margin: 0; padding: 0; list-style: none; }
 .nav li a { position: relative; font-size: .82rem; font-weight: 500; }
