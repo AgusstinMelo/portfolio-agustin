@@ -32,7 +32,7 @@ export function Hero() {
           <div className="hero__runtime"><span>✓</span> {t('hero.runtime')} <b>·</b> {t('hero.ai')} <b>·</b> {t('hero.web')}</div>
         </div>
         <div className="hero__workbench reveal reveal--delay-2">
-          <div className="hero__editor"><CodeEditor /></div>
+          <div className="hero__editor" data-note={t('hero.editorNote')}><CodeEditor /></div>
           <WorkflowPanel />
         </div>
       </div>
