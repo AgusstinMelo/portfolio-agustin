@@ -33,7 +33,7 @@ export function ToolDock() {
     <div className="tool-dock" aria-label={t('workflow.tools')}>
       <span className="tool-dock__label">{t('workflow.tools')} /</span>
       <div className="tool-dock__items">
-        <span>React</span><span>TypeScript</span><span>Next.js</span><span>Vite</span><span>{t('workflow.ai')}</span><span>Git</span>
+        <span>TypeScript</span><span>React</span><span>Next.js</span><span>Supabase</span><span>Python</span><span>Git</span>
       </div>
     </div>
   )
