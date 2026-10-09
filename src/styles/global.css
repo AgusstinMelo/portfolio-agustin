@@ -28,9 +28,8 @@
   font-synthesis: none;
   color-scheme: light;
 }
-
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+html { scroll-behavior: smooth; scroll-padding-top: 0; }
 body { margin: 0; min-width: 320px; background: var(--ivory); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
 body.menu-open { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
@@ -246,8 +245,8 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .approach-flow { position: relative; z-index: 1; width: min(60rem,90%); margin: 0 0 0 auto; padding: 0; list-style: none; }
 .approach-flow li { position: relative; display: grid; grid-template-columns: 4rem 1fr 1rem; gap: 1.5rem; padding: 2rem 0; border-top: 1px solid var(--line-light); view-timeline-name: --approach; view-timeline-axis: block; animation: approachReveal linear both; animation-timeline: --approach; animation-range: entry 10% cover 35%; }
 .approach-flow li > span { color: var(--rose); font: .6rem var(--font-mono); }
-.approach-flow h3 { margin: 0 0 .6rem; font: 500 clamp(1.7rem,3vw,2.8rem) var(--font-display); letter-spacing: -.05em; }
-.approach-flow p { max-width: 36rem; margin: 0; color: rgba(226,226,218,.7); line-height: 1.65; }
+.approach-flow h3 { margin: 0 0 .6rem; color: var(--night); font: 500 clamp(1.7rem,3vw,2.8rem) var(--font-display); letter-spacing: -.05em; }
+.approach-flow p { max-width: 36rem; margin: 0; color: rgba(42,42,53,.7); line-height: 1.65; }
 .approach-flow i { width: .55rem; aspect-ratio: 1; align-self: center; border-radius: 50%; background: var(--night); box-shadow: 0 0 0 5px rgba(42,42,53,.1); }
 
 .technologies--ecosystem { background: var(--ivory); }
@@ -346,7 +345,7 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .contact-form__status--error, .contact-form__status--unavailable { color: var(--amber); }
 
 @keyframes panelIn { from { opacity: 0; transform: translateY(12px) scale(.99); } to { opacity: 1; transform: none; } }
-@keyframes approachReveal { from { opacity: .3; transform: translateX(2rem); } to { opacity: 1; transform: none; } }
+@keyframes approachReveal { from { transform: translateX(2rem); } to { transform: none; } }
 
 @media (max-width: 900px) {
   .project-explorer, .tool-ecosystem, .goal-builder, .contact-form-layout { grid-template-columns: 1fr; }
@@ -399,7 +398,7 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .header__branch { margin-left: .8rem; color: var(--blue); }
 .nav { position: absolute; left: 50%; transform: translateX(-50%); }
 
-.hero--workspace { min-height: max(760px, 100svh); padding-top: 7rem; padding-bottom: 2.5rem; display: block; background: #252530; }
+.hero--workspace { min-height: 100svh; min-height: 100dvh; padding-top: 7rem; padding-bottom: 2.5rem; display: block; background: #252530; }
 .hero--workspace::before { opacity: .08; background-size: 52px 52px; mask-image: linear-gradient(to bottom, black, transparent 85%); }
 .hero--workspace::after { content: ''; position: absolute; inset: 4.5rem 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--foxglove), transparent); opacity: .45; }
 .hero__ambient { position: absolute; inset: 0; pointer-events: none; overflow: hidden; font: 500 11rem/1 var(--font-mono); color: rgba(226,226,218,.018); }
@@ -409,7 +408,7 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .hero__ambient span:nth-child(3) { right: 4rem; bottom: -1rem; font-size: 5rem; writing-mode: vertical-rl; }
 .hero__meta { position: relative; z-index: 2; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line-light); }
 .hero__meta span:first-child { display: flex; align-items: center; gap: .65rem; color: var(--mint); }
-.hero__workspace { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(31rem, .95fr); gap: clamp(2.5rem, 5vw, 6rem); align-items: center; min-height: calc(100svh - 13rem); padding: 3rem 0 4rem; }
+.hero__workspace { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(31rem, .95fr); gap: clamp(2.5rem, 5vw, 6rem); align-items: center; min-height: calc(100svh - 13rem); min-height: calc(100dvh - 13rem); padding: 3rem 0 4rem; }
 .hero__copy { align-self: auto; }
 .hero__hello { display: flex; align-items: center; gap: .8rem; color: var(--lily); text-transform: none; }
 .hero__hello span { color: var(--foxglove); opacity: .65; }
@@ -424,8 +423,6 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .hero__editor { position: relative; perspective: 1200px; }
 .hero__editor::before { content: ''; position: absolute; z-index: -1; inset: 10% -5% -7% 13%; border: 1px solid rgba(193,167,232,.18); background: rgba(193,167,232,.035); transform: translateZ(-1px); }
 .hero__editor::after { content: 'typescript · react'; position: absolute; right: -1rem; top: -1.2rem; padding: .45rem .65rem; color: var(--night); background: var(--amber); box-shadow: 0 8px 24px rgba(0,0,0,.2); font: 500 .52rem var(--font-mono); text-transform: uppercase; letter-spacing: .08em; transform: rotate(2deg); }
-.hero__scroll { position: absolute; z-index: 3; right: var(--page-padding); bottom: 1.5rem; display: flex; gap: .8rem; align-items: center; color: rgba(226,226,218,.45); font: .55rem var(--font-mono); text-transform: uppercase; letter-spacing: .12em; writing-mode: vertical-rl; }
-.hero__scroll i { display: block; width: 1px; height: 2.5rem; background: linear-gradient(var(--foxglove), transparent); }
 .hero__workbench { position: relative; padding: 1.5rem 0 4rem; }
 .hero__workbench::before { content: ''; position: absolute; z-index: -2; inset: -7% -10% 8% 12%; border-radius: 50%; background: radial-gradient(circle, rgba(185,131,145,.14), rgba(142,188,222,.04) 42%, transparent 70%); filter: blur(12px); }
 .workflow-panel { position: absolute; z-index: 4; right: -1.5rem; bottom: 0; width: min(19rem, 58%); overflow: hidden; color: var(--lily); border: 1px solid rgba(226,226,218,.14); border-radius: 6px; background: rgba(42,42,53,.93); box-shadow: 0 24px 55px rgba(8,8,12,.38); backdrop-filter: blur(15px); transform: rotate(-1.2deg); transition: transform .35s ease; }
@@ -511,9 +508,23 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 @media (max-width: 1120px) {
   .hero__workspace { grid-template-columns: 1fr; padding-top: 4.5rem; }
   .hero__copy { max-width: 58rem; }
-  .hero__workbench { width: min(100%, 46rem); margin-left: auto; }
+  .hero__workbench { width: min(92%, 42rem); margin-inline: auto; padding-bottom: 3.5rem; }
+  .hero__editor { width: 94%; }
+  .window-frame.code-editor {
+    transform: scale(.86) rotate(.7deg);
+    transform-origin: top center;
+  }
+  .window-frame.code-editor:hover {
+    transform: scale(.86) rotate(0) translateY(-3px);
+  }
+  .code-lines { min-height: 20rem; }
+  .workflow-panel { right: 0; bottom: 4.75rem; width: min(15.5rem, 48%); }
+  .workflow-panel:hover { transform: rotate(0) translateY(-2px); }
+  .workflow-panel__header { height: 1.8rem; }
+  .workflow-panel ol { padding: .3rem; }
+  .workflow-step { min-height: 2.25rem; }
+  .workflow-step:not(:last-child)::after { top: 1.8rem; height: .9rem; }
   .hero--workspace { padding-bottom: 6rem; }
-  .hero__scroll { display: none; }
 }
 
 @media (max-width: 960px) {
@@ -529,7 +540,7 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
   .hero__workspace { min-height: auto; gap: 4rem; padding-top: 3.5rem; }
   .hero--workspace h1 { font-size: clamp(3.5rem, 14vw, 6rem); }
   .hero__editor { width: 100%; }
-  .hero__workbench { width: 100%; padding-bottom: 5rem; }
+  .hero__workbench { width: min(94%, 40rem); padding-bottom: 4rem; }
   .tool-dock { grid-template-columns: 1fr; gap: .5rem; }
   .project:nth-child(even) { margin-left: 0; }
 }
@@ -589,11 +600,11 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
 [data-theme='light'] .header__status, [data-theme='light'] .language-switch button { color: rgba(42,42,53,.48); }
 [data-theme='light'] .language-switch, [data-theme='light'] .theme-switch { border-color: var(--line-dark); }
 [data-theme='light'] .language-switch button[aria-pressed='true'] { color: var(--mauve); }
-[data-theme='light'] .hero--workspace { color: var(--night); background: var(--ivory); }
+[data-theme='light'] .hero--workspace { color: var(--night); background-color: var(--ivory); }
 [data-theme='light'] .hero--workspace::before { opacity: .1; }
 [data-theme='light'] .hero__hello { color: var(--night); }
 [data-theme='light'] .hero__description { color: rgba(42,42,53,.72); }
-[data-theme='light'] .hero__runtime, [data-theme='light'] .hero__scroll { color: rgba(42,42,53,.48); }
+[data-theme='light'] .hero__runtime { color: rgba(42,42,53,.48); }
 [data-theme='light'] .hero__meta { border-color: var(--line-dark); }
 [data-theme='light'] .hero__meta span:first-child { color: var(--mauve); }
 [data-theme='light'] .hero--workspace h1 em { color: #397e75; }
@@ -613,7 +624,7 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
 [data-theme='light'] .workflow-panel { color: var(--night); border-color: var(--line-dark); background: rgba(243,241,236,.96); box-shadow: 0 24px 55px rgba(42,42,53,.15); }
 [data-theme='light'] .workflow-panel__header, [data-theme='light'] .workflow-step small { color: rgba(42,42,53,.5); border-color: var(--line-dark); }
 [data-theme='light'] .workflow-step__index { color: rgba(42,42,53,.35); }
-[data-theme='light'] .projects--explorer, [data-theme='light'] .technologies--ecosystem { background: var(--lily); }
+[data-theme='light'] .projects--explorer, [data-theme='light'] .technologies--ecosystem { background-color: var(--lily); }
 [data-theme='light'] .project-explorer, [data-theme='light'] .project-explorer--light { color: var(--night); background: var(--ivory); border: 1px solid var(--line-dark); }
 [data-theme='light'] .project-explorer__tabs { background: #d6d6cf; border-color: var(--line-dark); }
 [data-theme='light'] .project-explorer__tabs button { color: rgba(42,42,53,.5); border-color: var(--line-dark); }
@@ -621,7 +632,7 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
 [data-theme='light'] .project-panel p { color: rgba(42,42,53,.7); }
 [data-theme='light'] .project-panel dl { border-color: var(--line-dark); }
 [data-theme='light'] .project-panel__comment { color: #397e75; }
-[data-theme='light'] .about--narrative { color: var(--night); background: var(--rose); }
+[data-theme='light'] .about--narrative { color: var(--night); background-color: var(--rose); }
 [data-theme='light'] .about-narrative__intro > p, [data-theme='light'] .approach-flow li { border-color: rgba(42,42,53,.2); }
 [data-theme='light'] .approach-flow p { color: rgba(42,42,53,.7); }
 [data-theme='light'] .section-label--light { color: var(--mauve); }
@@ -629,13 +640,13 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
 [data-theme='light'] .tool-inspector { color: var(--night); background: var(--lily); box-shadow: 18px 18px 0 var(--rose); }
 [data-theme='light'] .tool-inspector > p { color: rgba(42,42,53,.68); }
 [data-theme='light'] .tool-inspector__bar, [data-theme='light'] .tool-inspector > div:last-child { border-color: var(--line-dark); }
-[data-theme='light'] .how-work { color: var(--night); background: var(--ivory); }
+[data-theme='light'] .how-work { color: var(--night); background-color: var(--ivory); }
 [data-theme='light'] .how-work__intro > p, [data-theme='light'] .goal-builder__controls button { color: rgba(42,42,53,.62); border-color: var(--line-dark); }
 [data-theme='light'] .goal-builder__controls button[aria-pressed='true'] { color: var(--night); background: rgba(185,131,145,.16); }
 [data-theme='light'] .goal-builder__preview .window-frame__bar { background: #d6d6cf; }
 [data-theme='light'] .preview-notice { color: rgba(42,42,53,.48); border-color: var(--line-dark); background: var(--lily); }
 [data-theme='light'] .mini-site-wrap { background: #d4d3cc; }
-[data-theme='light'] .contact { color: var(--night); background: var(--lily); }
+[data-theme='light'] .contact { color: var(--night); background-color: var(--lily); }
 [data-theme='light'] .contact-form label, [data-theme='light'] .contact__footer { border-color: var(--line-dark); }
 [data-theme='light'] .contact-form input, [data-theme='light'] .contact-form select, [data-theme='light'] .contact-form textarea { color: var(--night); }
 [data-theme='light'] .contact-form input::placeholder, [data-theme='light'] .contact-form textarea::placeholder { color: rgba(42,42,53,.36); }
@@ -657,3 +668,287 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
   [data-theme='light'] .nav { color: var(--night); background: var(--ivory); }
   [data-theme='light'] .nav li { border-color: var(--line-dark); }
 }
+
+/* Viewport-sized section rhythm
+   Content-heavy sections may grow beyond one screen, but never finish before
+   filling it. The hero is compacted on short desktop displays so its complete
+   composition remains visible below the persistent header. */
+main > section,
+.contact {
+  min-height: 100svh;
+  min-height: 100dvh;
+  scroll-margin-top: 0;
+}
+
+@media (min-width: 1121px) and (max-height: 900px) {
+  .hero--workspace {
+    height: 100svh;
+    height: 100dvh;
+    min-height: 40rem;
+    padding-top: 5.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .hero__meta { padding-bottom: .75rem; }
+
+  .hero__workspace {
+    min-height: 0;
+    height: calc(100% - 6.75rem);
+    gap: clamp(2rem, 4vw, 4.5rem);
+    padding: 1rem 0 1.5rem;
+  }
+
+  .hero--workspace h1 {
+    font-size: clamp(3.35rem, min(7.2vw, 9vh), 7rem);
+  }
+
+  .hero__description { margin-top: 1.25rem; }
+  .hero--workspace .hero__actions { margin-top: 1.25rem; }
+  .hero__runtime { margin-top: 1.25rem; }
+  .hero__workbench { padding: .5rem 0 2rem; }
+  .code-lines { min-height: clamp(17rem, 37vh, 25rem); }
+  .tool-dock { min-height: 3rem; padding-block: .45rem; }
+}
+
+/* Soft background joins
+   Each boundary shares the same 50/50 color at both sides. The blend is split
+   between adjacent sections so it reads as ambient light, not as a separator. */
+:root { --section-blend-half: clamp(10rem, 12vw, 15rem); }
+
+.hero--workspace,
+.projects--explorer,
+.about--narrative,
+.technologies--ecosystem,
+.how-work {
+  background-color: var(--section-color);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--section-previous) 50%, var(--section-color)) 0,
+      color-mix(in srgb, var(--section-previous) 34%, var(--section-color)) 24%,
+      color-mix(in srgb, var(--section-previous) 16%, var(--section-color)) 52%,
+      var(--section-color) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--section-color) 0,
+      color-mix(in srgb, var(--section-color) 84%, var(--section-next)) 48%,
+      color-mix(in srgb, var(--section-color) 66%, var(--section-next)) 76%,
+      color-mix(in srgb, var(--section-color) 50%, var(--section-next)) 100%
+    );
+  background-repeat: no-repeat;
+  background-position: top, bottom;
+  background-size: 100% var(--section-blend-half);
+}
+
+.hero--workspace {
+  --section-previous: #252530;
+  --section-color: #252530;
+  --section-next: var(--lily);
+}
+
+.projects--explorer {
+  --section-previous: #252530;
+  --section-color: var(--lily);
+  --section-next: var(--mauve);
+  background-image:
+    linear-gradient(rgba(42,42,53,.035) 1px, transparent 1px),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--section-previous) 50%, var(--section-color)) 0,
+      color-mix(in srgb, var(--section-previous) 34%, var(--section-color)) 24%,
+      color-mix(in srgb, var(--section-previous) 16%, var(--section-color)) 52%,
+      var(--section-color) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--section-color) 0,
+      color-mix(in srgb, var(--section-color) 84%, var(--section-next)) 48%,
+      color-mix(in srgb, var(--section-color) 66%, var(--section-next)) 76%,
+      color-mix(in srgb, var(--section-color) 50%, var(--section-next)) 100%
+    );
+  background-position: top, top, bottom;
+  background-size: 100% 5rem, 100% var(--section-blend-half), 100% var(--section-blend-half);
+  background-repeat: repeat-y, no-repeat, no-repeat;
+}
+
+.about--narrative {
+  --section-previous: var(--lily);
+  --section-color: var(--mauve);
+  --section-next: var(--ivory);
+}
+
+.technologies--ecosystem {
+  --section-previous: var(--mauve);
+  --section-color: var(--ivory);
+  --section-next: #23232d;
+}
+
+.how-work {
+  --section-previous: var(--ivory);
+  --section-color: #23232d;
+  --section-next: var(--night);
+}
+
+.contact {
+  --section-previous: #23232d;
+  --section-color: var(--night);
+  background-color: var(--section-color);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--section-previous) 50%, var(--section-color)) 0,
+    color-mix(in srgb, var(--section-previous) 34%, var(--section-color)) 24%,
+    color-mix(in srgb, var(--section-previous) 16%, var(--section-color)) 52%,
+    var(--section-color) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--section-blend-half);
+}
+
+[data-theme='light'] .hero--workspace {
+  --section-previous: var(--ivory);
+  --section-color: var(--ivory);
+  --section-next: var(--lily);
+}
+
+[data-theme='light'] .projects--explorer {
+  --section-previous: var(--ivory);
+  --section-color: var(--lily);
+  --section-next: var(--rose);
+}
+
+[data-theme='light'] .about--narrative {
+  --section-previous: var(--lily);
+  --section-color: var(--rose);
+  --section-next: var(--lily);
+}
+
+[data-theme='light'] .technologies--ecosystem {
+  --section-previous: var(--rose);
+  --section-color: var(--lily);
+  --section-next: var(--ivory);
+}
+
+[data-theme='light'] .how-work {
+  --section-previous: var(--lily);
+  --section-color: var(--ivory);
+  --section-next: var(--lily);
+}
+
+[data-theme='light'] .contact {
+  --section-previous: var(--ivory);
+  --section-color: var(--lily);
+}
+
+@media (max-width: 600px) {
+  :root { --section-blend-half: clamp(8rem, 38vw, 11rem); }
+}
+
+/* Compact workbench for laptop/tablet widths. This final override uses real
+   box dimensions so the tools dock always has a clear, non-overlapping lane. */
+@media (min-width: 521px) and (max-width: 1400px) {
+  .hero__workbench {
+    width: min(80%, 34rem);
+    padding-bottom: 3rem;
+  }
+
+  .hero__editor { width: 100%; }
+
+  .window-frame.code-editor,
+  .window-frame.code-editor:hover {
+    transform: rotate(0);
+  }
+
+  .code-lines {
+    height: 15rem;
+    min-height: 0;
+    font-size: clamp(.48rem, .62vw, .62rem);
+    line-height: 1.35;
+  }
+
+  .workflow-panel {
+    right: -1rem;
+    bottom: 3.5rem;
+    width: min(12.5rem, 44%);
+  }
+
+  .workflow-step {
+    grid-template-columns: 1.2rem 1fr auto;
+    gap: .3rem;
+    min-height: 1.95rem;
+    padding: .15rem .3rem;
+  }
+
+  .workflow-step:not(:last-child)::after {
+    left: .9rem;
+    top: 1.55rem;
+    height: .7rem;
+  }
+
+  .workflow-step small { font-size: .42rem; }
+  .workflow-step strong { font-size: .52rem; }
+  .workflow-step__status { font-size: .35rem; }
+}
+
+[data-theme='light'] {
+  --section-blend-half: clamp(12rem, 14vw, 17rem);
+}
+
+@media (max-width: 600px) {
+  [data-theme='light'] { --section-blend-half: clamp(9rem, 42vw, 12rem); }
+}
+
+/* Definitive compact size for the complete workspace component. */
+.hero__workbench {
+  width: min(100%, 38rem);
+  justify-self: end;
+  margin-inline: auto;
+  padding: .5rem 0 2.5rem;
+}
+
+.hero__editor { width: 100%; }
+
+.window-frame.code-editor {
+  transform: rotate(-.6deg);
+}
+
+.window-frame.code-editor:hover {
+  transform: rotate(0) translateY(-4px);
+}
+
+.code-lines {
+  height: 14.5rem;
+  min-height: 0;
+  padding-block: .35rem;
+  overflow: hidden;
+  font-size: .56rem;
+  line-height: 1.35;
+}
+
+.code-line { min-height: 0; }
+
+.workflow-panel {
+  right: -.75rem;
+  bottom: 2.5rem;
+  width: min(13.5rem, 46%);
+}
+
+.workflow-panel__header { height: 1.7rem; }
+.workflow-panel ol { padding: .25rem; }
+
+.workflow-step {
+  grid-template-columns: 1.15rem 1fr auto;
+  gap: .25rem;
+  min-height: 1.85rem;
+  padding: .12rem .28rem;
+}
+
+.workflow-step:not(:last-child)::after {
+  left: .82rem;
+  top: 1.45rem;
+  height: .65rem;
+}
+
+.workflow-step strong { font-size: .54rem; }
+.workflow-step small { font-size: .43rem; }
+.workflow-step__status { padding: .17rem .25rem; font-size: .36rem; }

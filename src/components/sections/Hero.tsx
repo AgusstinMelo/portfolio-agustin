@@ -7,7 +7,7 @@ export function Hero() {
   const { t } = usePreferences()
   return (
     <section className="hero hero--workspace" id="inicio" aria-labelledby="hero-title">
-      <div className="hero__ambient" aria-hidden="true"><span>&lt;/&gt;</span><span>01</span><span>BUILD</span></div>
+      <div className="hero__ambient" aria-hidden="true"><span>&lt;/&gt;</span></div>
       <div className="hero__meta reveal">
         <span><i className="status-dot" /> {t('hero.role')}</span>
         <span>{t('hero.flow')}</span>
@@ -15,7 +15,7 @@ export function Hero() {
 
       <div className="hero__workspace">
         <div className="hero__copy">
-          <p className="hero__hello reveal"><span>01</span> {t('hero.hello')}</p>
+          <p className="hero__hello reveal"><span>00</span> {t('hero.hello')}</p>
           <h1 id="hero-title" className="reveal reveal--delay-1">
             {t('hero.line1')} <em>{t('hero.idea')} </em>{t('hero.line2')}<br />
             <strong>{t('hero.line3')}</strong>
@@ -39,7 +39,6 @@ export function Hero() {
 
       <ToolDock />
 
-      <a className="hero__scroll" href="#proyectos"><span>{t('hero.scroll')}</span><i /></a>
     </section>
   )
 }
