@@ -4,6 +4,7 @@ export const navItems = [
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Sobre mí', href: '#sobre-mi' },
   { label: 'Tecnologías', href: '#tecnologias' },
+  { label: 'Cómo trabajo', href: '#como-trabajo' },
   { label: 'Contacto', href: '#contacto' },
 ]
 
@@ -37,7 +38,8 @@ export const technologyGroups: TechnologyGroup[] = [
   { title: 'Lenguajes', items: ['JavaScript', 'TypeScript', 'Python', 'C / C++'] },
   { title: 'Frontend', items: ['React', 'Next.js', 'Vite'] },
   { title: 'Datos y servicios', items: ['SQL', 'Supabase', 'APIs REST'] },
-  { title: 'Herramientas', items: ['Git', 'GitHub', 'Vercel'] },
+  { title: 'Herramientas y despliegue', items: ['Git', 'GitHub', 'Vercel'] },
+  { title: 'Desarrollo asistido por IA', items: ['Codex'] },
 ]
 
 export const socialLinks = {

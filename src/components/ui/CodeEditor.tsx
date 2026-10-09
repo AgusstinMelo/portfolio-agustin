@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { WindowFrame } from './WindowFrame'
+import { usePreferences } from '../../contexts/PreferencesContext'
+import type { TranslationKey } from '../../i18n/translations'
 
 type EditorTab = 'profile.ts' | 'now.md'
 
-const profileLines = [
+const getProfileLines = (t: (key: TranslationKey) => string) => [
   <><span className="syntax-keyword">type</span> <span className="syntax-type">Developer</span> = {'{'}</>,
   <>  role: <span className="syntax-type">string</span>;</>,
   <>  interests: <span className="syntax-type">string</span>[];</>,
@@ -12,30 +14,31 @@ const profileLines = [
   <>{'};'}</>,
   <></>,
   <><span className="syntax-keyword">const</span> <span className="syntax-variable">agustin</span>: <span className="syntax-type">Developer</span> = {'{'}</>,
-  <>  role: <span className="syntax-string">'Software Developer'</span>,</>,
+  <>  role: <span className="syntax-string">'{t('editor.role')}'</span>,</>,
   <>  interests: [</>,
-  <>    <span className="syntax-string">'Web Development'</span>,</>,
-  <>    <span className="syntax-string">'Gaming'</span>,</>,
-  <>    <span className="syntax-string">'Technology'</span>,</>,
+  <>    <span className="syntax-string">'{t('editor.web')}'</span>,</>,
+  <>    <span className="syntax-string">'{t('editor.gaming')}'</span>,</>,
+  <>    <span className="syntax-string">'{t('editor.technology')}'</span>,</>,
   <>  ],</>,
   <>  projects: [<span className="syntax-string">'Rift Deck'</span>, <span className="syntax-string">'MyFinteem'</span>],</>,
-  <>  currently: <span className="syntax-string">'Building new things'</span>,</>,
+  <>  currently: <span className="syntax-string">'{t('editor.current')}'</span>,</>,
   <>{'};'}</>,
 ]
 
-const nowLines = [
-  <><span className="syntax-comment"># En este momento</span></>,
+const getNowLines = (t: (key: TranslationKey) => string) => [
+  <><span className="syntax-comment"># {t('editor.nowTitle')}</span></>,
   <></>,
-  <>Construyendo productos digitales</>,
-  <>con atención a la lógica, la interfaz</>,
-  <>y la experiencia de uso.</>,
+  <>{t('editor.now1')}</>,
+  <>{t('editor.now2')}</>,
+  <>{t('editor.now3')}</>,
   <></>,
-  <><span className="syntax-comment">// aprender · iterar · resolver</span></>,
+  <><span className="syntax-comment">// {t('editor.nowComment')}</span></>,
 ]
 
 export function CodeEditor() {
   const [activeTab, setActiveTab] = useState<EditorTab>('profile.ts')
-  const lines = activeTab === 'profile.ts' ? profileLines : nowLines
+  const { t } = usePreferences()
+  const lines = activeTab === 'profile.ts' ? getProfileLines(t) : getNowLines(t)
 
   return (
     <WindowFrame title="workspace" path="~/portfolio/src" className="code-editor">
@@ -44,7 +47,7 @@ export function CodeEditor() {
           <span className="rail-icon rail-icon--active">◇</span><span>⌕</span><span>⑂</span><span>□</span>
         </aside>
         <div className="code-editor__main">
-          <div className="editor-tabs" role="tablist" aria-label="Archivos del editor">
+          <div className="editor-tabs" role="tablist" aria-label={t('editor.files')}>
             {(['profile.ts', 'now.md'] as EditorTab[]).map((tab) => (
               <button
                 type="button"
@@ -70,8 +73,8 @@ export function CodeEditor() {
               ))}
             </code>
           </pre>
-          <div className="editor-status" aria-label="Estado del editor">
-            <span>⑂ main*</span><span className="editor-status__spacer" /><span>Ln {activeTab === 'profile.ts' ? '17' : '7'}, Col 1</span><span>UTF-8</span><span>{activeTab === 'profile.ts' ? 'TypeScript' : 'Markdown'}</span>
+          <div className="editor-status" aria-label={t('editor.status')}>
+            <span>⑂ main*</span><span className="editor-status__spacer" /><span>{t('editor.line')} {activeTab === 'profile.ts' ? '17' : '7'}, {t('editor.column')} 1</span><span>UTF-8</span><span>{activeTab === 'profile.ts' ? 'TypeScript' : 'Markdown'}</span>
           </div>
         </div>
       </div>

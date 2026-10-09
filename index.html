@@ -10,6 +10,18 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
     <title>Agustín — Desarrollador de software</title>
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('portfolio-theme');
+          const theme = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+          const savedLanguage = localStorage.getItem('portfolio-language');
+          document.documentElement.lang = savedLanguage === 'es' || savedLanguage === 'en' ? savedLanguage : navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en';
+        } catch { document.documentElement.dataset.theme = 'dark'; }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

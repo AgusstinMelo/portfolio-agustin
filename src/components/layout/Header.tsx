@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react'
 import { navItems } from '../../data/content'
+import { usePreferences } from '../../contexts/PreferencesContext'
+import { PreferenceControls } from '../ui/PreferenceControls'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = usePreferences()
+  const labels = [t('nav.projects'), t('nav.about'), t('nav.technologies'), t('nav.process'), t('nav.contact')]
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', isOpen)
@@ -11,7 +15,7 @@ export function Header() {
 
   return (
     <header className="header">
-      <a className="brand" href="#inicio" aria-label="Agustín, ir al inicio">
+      <a className="brand" href="#inicio" aria-label={t('nav.home')}>
         <span>A</span>gustín<span className="brand__dot">.</span>
         <small>dev</small>
       </a>
@@ -19,7 +23,7 @@ export function Header() {
       <button
         className="menu-toggle"
         type="button"
-        aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-label={isOpen ? t('nav.close') : t('nav.open')}
         aria-expanded={isOpen}
         aria-controls="main-navigation"
         onClick={() => setIsOpen((open) => !open)}
@@ -28,23 +32,26 @@ export function Header() {
         <span />
       </button>
 
-      <nav id="main-navigation" className={`nav${isOpen ? ' nav--open' : ''}`} aria-label="Navegación principal">
-        <div className="nav__count">(04)</div>
+      <nav id="main-navigation" className={`nav${isOpen ? ' nav--open' : ''}`} aria-label={t('nav.label')}>
+        <div className="nav__count">(0{navItems.length})</div>
         <ul>
           {navItems.map((item, index) => (
             <li key={item.href}>
               <a href={item.href} onClick={() => setIsOpen(false)}>
                 <span>0{index + 1}</span>
-                {item.label}
+                {labels[index]}
               </a>
             </li>
           ))}
         </ul>
       </nav>
-      <div className="header__status" aria-label="Estado del sitio">
+      <div className="header__tools">
+      <div className="header__status" aria-label={t('nav.status')}>
         <span className="status-dot" />
-        <span>available</span>
+        <span>{t('nav.available')}</span>
         <span className="header__branch">⑂ main</span>
+      </div>
+      <PreferenceControls />
       </div>
     </header>
   )
