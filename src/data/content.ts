@@ -17,7 +17,7 @@ export const projects: Project[] = [
     description:
       'Una aplicación web relacionada con League of Legends: Wild Rift, pensada para convertir información del juego en una experiencia clara y útil.',
     contribution: 'Proyecto de desarrollo web.',
-    technologies: ['Python', 'React', 'TypeScript', 'API Rest', 'Supabase','SQL', 'IA Integration', 'Vite', 'Vercel'],
+    technologies: ['Python', 'React', 'TypeScript', 'Next.js', 'APIs Rest', 'Supabase','SQL', 'IA Integration', 'Vite', 'Vercel'],
     url: 'https://www.riftdeck.com.ar',
     tone: 'dark',
   },

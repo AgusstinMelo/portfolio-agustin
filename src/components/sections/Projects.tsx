@@ -6,7 +6,7 @@ import { SectionLabel } from '../ui/SectionLabel'
 import { WindowFrame } from '../ui/WindowFrame'
 import { usePreferences } from '../../contexts/PreferencesContext'
 import type { TranslationKey } from '../../i18n/translations'
-import riftDeckPreview from '../../assets/rift-deck-preview.png'
+import riftDeckPreviewVideo from '../../assets/rift-deck-preview.mp4'
 
 type ProjectTab = 'preview' | 'overview' | 'stack'
 
@@ -15,7 +15,16 @@ function ProjectPlaceholder({ project }: { project: Project }) {
   if (project.id === 'rift-deck') {
     return (
       <div className={`project-explorer__placeholder project-visual--${project.id}`}>
-        <img className="project-visual__image" src={riftDeckPreview} alt={`${t('projects.preview')}: ${project.name}`} />
+        <video
+          className="project-visual__image"
+          src={riftDeckPreviewVideo}
+          aria-label={`${t('projects.preview')}: ${project.name}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
       </div>
     )
   }
