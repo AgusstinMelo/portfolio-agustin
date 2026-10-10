@@ -6,14 +6,22 @@ import { SectionLabel } from '../ui/SectionLabel'
 import { WindowFrame } from '../ui/WindowFrame'
 import { usePreferences } from '../../contexts/PreferencesContext'
 import type { TranslationKey } from '../../i18n/translations'
+import riftDeckPreview from '../../assets/rift-deck-preview.png'
 
 type ProjectTab = 'preview' | 'overview' | 'stack'
 
 function ProjectPlaceholder({ project }: { project: Project }) {
   const { t } = usePreferences()
+  if (project.id === 'rift-deck') {
+    return (
+      <div className={`project-explorer__placeholder project-visual--${project.id}`}>
+        <img className="project-visual__image" src={riftDeckPreview} alt={`${t('projects.preview')}: ${project.name}`} />
+      </div>
+    )
+  }
   return (
     <div className={`project-explorer__placeholder project-visual--${project.id}`} aria-label={`${t('projects.captureSpace')} ${project.name}`}>
-      {project.id === 'rift-deck' ? <div className="rift-mark"><span>RD</span><div className="rift-mark__ring" /></div> : <div className="finteem-mark"><span>MY</span><strong>FINTEEM</strong><i /></div>}
+      <div className="finteem-mark"><span>MY</span><strong>FINTEEM</strong><i /></div>
       <span className="project-visual__note">{t('projects.capture')}</span>
     </div>
   )
@@ -22,8 +30,6 @@ function ProjectPlaceholder({ project }: { project: Project }) {
 function ProjectPanel({ project, tab }: { project: Project; tab: ProjectTab }) {
   const { t } = usePreferences()
   const prefix = project.id === 'rift-deck' ? 'project.rift' : 'project.myfinteem'
-  const description = t(`${prefix}.description` as TranslationKey)
-  const contribution = t(`${prefix}.contribution` as TranslationKey)
   if (tab === 'preview') return <ProjectPlaceholder project={project} />
   if (tab === 'stack') return (
     <div className="project-panel project-panel--stack">
@@ -32,10 +38,16 @@ function ProjectPanel({ project, tab }: { project: Project; tab: ProjectTab }) {
     </div>
   )
   return (
-    <div className="project-panel">
-      <span className="project-panel__comment">// {t('projects.context')}</span>
-      <h4>{project.name}</h4><p>{description}</p>
-      <dl><dt>{t('projects.contribution')}</dt><dd>{contribution}</dd></dl>
+    <div className="project-panel project-panel--overview">
+      <span className="project-panel__comment">// {t('projects.overviewIntro')}</span>
+      <div className="project-overview__grid">
+        {(['challenge', 'achievement', 'next'] as const).map((section, index) => (
+          <section className="project-overview__item" key={section}>
+            <h4>{t(`projects.${section}` as TranslationKey)}</h4>
+            <p>{t(`${prefix}.${section}` as TranslationKey)}</p>
+          </section>
+        ))}
+      </div>
     </div>
   )
 }
@@ -67,14 +79,14 @@ export function Projects() {
           </button>
         ))}
       </div>
-      <article className={`project-explorer project-explorer--${project.tone}`} key={project.id}>
+      <article className={`project-explorer project-explorer--${project.tone} project-explorer--${project.id}`} key={project.id}>
         <div className="project-explorer__copy">
           <p>{eyebrow}</p><h3>{project.name}</h3>
           <p className="project-explorer__description">{description}</p>
           <p className="project-explorer__contribution">{contribution}</p>
           {project.url ? <a href={project.url} target="_blank" rel="noreferrer">{t('projects.open')} <ArrowIcon direction="up-right" /></a> : <span className="project-explorer__pending">{t('projects.linkPending')}</span>}
         </div>
-        <WindowFrame title={`${project.id}.workspace`} path={`/projects/${project.id}`} className="project-explorer__window">
+        <WindowFrame title={`${project.id}.workspace`} path={`/projects/${project.id}`} className={`project-explorer__window project-explorer__window--${project.id}`}>
           <div className="project-explorer__tabs" role="tablist" aria-label={`${t('projects.info')} ${project.name}`}>
             {(['preview', 'overview', 'stack'] as ProjectTab[]).map((tab) => <button type="button" role="tab" aria-selected={activeTab === tab} onClick={() => setActiveTab(tab)} key={tab}>{tabLabels[tab]}</button>)}
           </div>
@@ -83,7 +95,7 @@ export function Projects() {
       </article>
       <div className="project-pagination" aria-label={t('projects.navigation')}>
         <span>{String(activeProject + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
-        <div><button type="button" onClick={() => chooseProject((activeProject - 1 + projects.length) % projects.length)} aria-label={t('projects.previous')}>←</button><button type="button" onClick={() => chooseProject((activeProject + 1) % projects.length)} aria-label={t('projects.next')}>→</button></div>
+        <div><button type="button" onClick={() => chooseProject((activeProject - 1 + projects.length) % projects.length)} aria-label={t('projects.previous')}>←</button><button type="button" onClick={() => chooseProject((activeProject + 1) % projects.length)} aria-label={t('projects.nextProject')}>→</button></div>
       </div>
     </section>
   )
