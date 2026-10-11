@@ -257,8 +257,16 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 
 .about--narrative { position: relative; overflow: hidden; background: var(--mauve); }
 .about--narrative::after { content: '→'; position: absolute; right: -2rem; top: 5rem; color: rgba(42,42,53,.08); font: 20rem var(--font-display); }
-.about-narrative__intro { display: grid; grid-template-columns: 1.4fr .6fr; gap: 5vw; align-items: end; margin: 7rem 0; }
-.about-narrative__intro > p { max-width: 31rem; margin: 0; padding-top: 1.5rem; border-top: 1px solid var(--line-light); font-size: 1.05rem; line-height: 1.7; }
+.about-narrative__intro { display: grid; grid-template-columns: 1.2fr .8fr; gap: 4vw; align-items: start; margin: 3.5rem 0 1rem; }
+.about-narrative__identity { display: grid; gap: clamp(2.5rem,5vw,4.5rem); justify-items: start; }
+.about-narrative__copy { width: 100%; max-width: 31rem; margin-top: clamp(6rem,9vw,10rem); padding-top: 1.5rem; transform: translateX(-4rem); border-top: 1px solid var(--line-light); }
+.about-narrative__copy p { margin: 0; font-size: 1.05rem; line-height: 1.7; }
+.about-narrative__copy p + p { margin-top: 1.25rem; opacity: .78; }
+.profile-frame { position: relative; width: min(14rem,60vw); aspect-ratio: 4 / 5; margin: 0; margin-left: 4rem; left: 1.5rem; top: -3rem; overflow: hidden; color: var(--lily); border: 1  px solid rgba(226,226,218,.42); background: rgba(42,42,53,.09); isolation: isolate; box-shadow: 12px 12px 0 rgba(42,42,53,.14); }
+.profile-frame::before, .profile-frame::after { content: ''; position: absolute; z-index: 3; width: 2rem; height: 2rem; pointer-events: none; }
+.profile-frame::before { top: .7rem; left: .7rem; border-top: 1px solid var(--lily); border-left: 1px solid var(--lily); }
+.profile-frame::after { right: .7rem; bottom: .7rem; border-right: 1px solid var(--lily); border-bottom: 1px solid var(--lily); }
+.profile-frame img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.04); }
 .approach-flow { position: relative; z-index: 1; width: min(60rem,90%); margin: 0 0 0 auto; padding: 0; list-style: none; }
 .approach-flow li { position: relative; display: grid; grid-template-columns: 4rem 1fr 1rem; gap: 1.5rem; padding: 2rem 0; border-top: 1px solid var(--line-light); view-timeline-name: --approach; view-timeline-axis: block; animation: approachReveal linear both; animation-timeline: --approach; animation-range: entry 10% cover 35%; }
 .approach-flow li > span { color: var(--rose); font: .6rem var(--font-mono); }
@@ -368,6 +376,7 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
   .project-explorer, .tool-ecosystem, .goal-builder, .contact-form-layout { grid-template-columns: 1fr; }
   .project-explorer__window { min-height: 30rem; }
   .about-narrative__intro, .how-work__intro { grid-template-columns: 1fr; }
+  .about-narrative__copy { max-width: 36rem; margin-top: 0; }
   .approach-flow { width: 100%; }
   .tool-inspector, .contact-form-layout__intro { position: static; }
   .how-work__intro { gap: 2rem; }
@@ -391,7 +400,8 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
   .project-explorer__window--rift-deck .project-explorer__placeholder { height: 100%; aspect-ratio: auto; }
   .project-explorer__tabs button { flex: 1; padding: 0 .5rem; }
   .project-overview__grid { grid-template-columns: 1fr; }
-  .about-narrative__intro { margin: 5rem 0; }
+  .about-narrative__intro { margin: 3rem 0 5rem; }
+  .profile-frame { width: min(16rem,75vw); }
   .approach-flow li { grid-template-columns: 2rem 1fr; }
   .approach-flow li i { display: none; }
   .tool-ecosystem__nodes { padding: 1rem; }
@@ -656,7 +666,7 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
 [data-theme='light'] .project-panel dl { border-color: var(--line-dark); }
 [data-theme='light'] .project-panel__comment { color: #397e75; }
 [data-theme='light'] .about--narrative { color: var(--night); background-color: var(--rose); }
-[data-theme='light'] .about-narrative__intro > p, [data-theme='light'] .approach-flow li { border-color: rgba(42,42,53,.2); }
+[data-theme='light'] .about-narrative__copy, [data-theme='light'] .approach-flow li { border-color: rgba(42,42,53,.2); }
 [data-theme='light'] .approach-flow p { color: rgba(42,42,53,.7); }
 [data-theme='light'] .section-label--light { color: var(--mauve); }
 [data-theme='light'] .section-label--light span:first-child { color: rgba(42,42,53,.4); }
@@ -701,6 +711,11 @@ main > section,
   min-height: 100svh;
   min-height: 100dvh;
   scroll-margin-top: 0;
+}
+
+/* Prevent sub-pixel seams where two independently painted section gradients meet. */
+main > section + section {
+  margin-top: -1px;
 }
 
 @media (min-width: 1121px) and (max-height: 900px) {
