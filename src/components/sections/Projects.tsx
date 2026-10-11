@@ -94,10 +94,14 @@ export function Projects() {
           <p className="project-explorer__contribution">{contribution}</p>
           {project.url ? <a href={project.url} target="_blank" rel="noreferrer">{t('projects.open')} <ArrowIcon direction="up-right" /></a> : <span className="project-explorer__pending">{t('projects.linkPending')}</span>}
         </div>
-        <WindowFrame title={`${project.id}.workspace`} path={`/projects/${project.id}`} className={`project-explorer__window project-explorer__window--${project.id}`}>
-          <div className="project-explorer__tabs" role="tablist" aria-label={`${t('projects.info')} ${project.name}`}>
+        <WindowFrame
+          title={`${project.id}.workspace`}
+          path={`/projects/${project.id}`}
+          className={`project-explorer__window project-explorer__window--${project.id}`}
+          toolbar={<div className="project-explorer__tabs" role="tablist" aria-label={`${t('projects.info')} ${project.name}`}>
             {(['preview', 'overview', 'stack'] as ProjectTab[]).map((tab) => <button type="button" role="tab" aria-selected={activeTab === tab} onClick={() => setActiveTab(tab)} key={tab}>{tabLabels[tab]}</button>)}
-          </div>
+          </div>}
+        >
           <div className="project-explorer__viewport" aria-live="polite"><ProjectPanel project={project} tab={activeTab} /></div>
         </WindowFrame>
       </article>

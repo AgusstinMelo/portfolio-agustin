@@ -5,13 +5,15 @@ interface WindowFrameProps {
   path?: string
   children: ReactNode
   className?: string
+  toolbar?: ReactNode
 }
 
-export function WindowFrame({ title, path, children, className = '' }: WindowFrameProps) {
+export function WindowFrame({ title, path, children, className = '', toolbar }: WindowFrameProps) {
   return (
     <div className={`window-frame ${className}`}>
-      <div className="window-frame__bar">
+      <div className={`window-frame__bar${toolbar ? ' window-frame__bar--with-toolbar' : ''}`}>
         <div className="window-frame__controls" aria-hidden="true"><span /><span /><span /></div>
+        {toolbar}
         <span className="window-frame__title">{title}</span>
         <span className="window-frame__path">{path}</span>
       </div>
