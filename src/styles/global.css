@@ -270,11 +270,12 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .profile-frame::after { right: .7rem; bottom: .7rem; border-right: 1px solid var(--lily); border-bottom: 1px solid var(--lily); }
 .profile-frame img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.04); }
 .approach-flow { position: relative; z-index: 1; width: min(60rem,90%); margin: 0 0 0 auto; padding: 0; list-style: none; }
-.approach-flow li { position: relative; display: grid; grid-template-columns: 4rem 1fr 1rem; gap: 1.5rem; padding: 2rem 0; border-top: 1px solid var(--line-light); view-timeline-name: --approach; view-timeline-axis: block; animation: approachReveal linear both; animation-timeline: --approach; animation-range: entry 10% cover 35%; }
+.approach-flow li { position: relative; display: grid; grid-template-columns: 4rem 1fr; gap: 1.5rem; padding: 2rem 0; border-top: 1px solid var(--line-light); view-timeline-name: --approach; view-timeline-axis: block; animation: approachReveal linear both; animation-timeline: --approach; animation-range: entry 10% cover 35%; }
 .approach-flow li > span { color: var(--rose); font: .6rem var(--font-mono); }
+.approach-flow li > div { position: relative; }
 .approach-flow h3 { margin: 0 0 .6rem; color: var(--night); font: 500 clamp(1.7rem,3vw,2.8rem) var(--font-display); letter-spacing: -.05em; }
 .approach-flow p { max-width: 36rem; margin: 0; color: rgba(42,42,53,.7); line-height: 1.65; }
-.approach-flow i { width: .55rem; aspect-ratio: 1; align-self: center; border-radius: 50%; background: var(--night); box-shadow: 0 0 0 5px rgba(42,42,53,.1); }
+.approach-flow i { position: absolute; top: .65em; left: -1.35rem; width: .55rem; aspect-ratio: 1; border-radius: 50%; background: var(--night); box-shadow: 0 0 0 5px rgba(42,42,53,.1); transform: translateY(-50%); }
 
 .technologies--ecosystem { background: var(--ivory); }
 .tool-ecosystem { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(20rem,.6fr); gap: clamp(2rem,5vw,6rem); align-items: start; }
@@ -1091,7 +1092,7 @@ main > section + section {
     transform: none;
   }
 
-  .about-narrative__copy p { font-size: clamp(.88rem, min(1vw, 1.8vh), 1.05rem); line-height: 1.55; }
+  .about-narrative__copy p { font-size: clamp(1rem, min(1vw, 1.8vh), 1.05rem); line-height: 1.55; }
   .about-narrative__copy p + p { margin-top: clamp(.65rem, 1.4vh, 1rem); }
 
   .approach-flow {
@@ -1104,14 +1105,14 @@ main > section + section {
   }
 
   .approach-flow li {
-    grid-template-columns: 2.2rem 1fr .7rem;
+    grid-template-columns: 2.2rem 1fr;
     gap: clamp(.65rem, 1vw, 1rem);
     min-height: 0;
     padding: clamp(.55rem, 1.4vh, 1rem) 0;
   }
 
   .approach-flow h3 { margin-bottom: .35rem; font-size: clamp(1.25rem, min(2vw, 3vh), 2rem); }
-  .approach-flow p { font-size: clamp(.76rem, min(.9vw, 1.5vh), .95rem); line-height: 1.45; }
+  .approach-flow p { font-size: clamp(1rem, min(.9vw, 1.5vh), 1.2rem); line-height: 1.45; }
 
   /* Technologies */
   .technologies--ecosystem {
@@ -1295,6 +1296,66 @@ main > section + section {
   .project-pagination {
     grid-column: 1;
     grid-row: 3;
+  }
+}
+
+/* About: identity column + two-column narrative, following the supplied reference. */
+@media (min-width: 1200px) {
+  .about--narrative {
+    grid-template-columns: minmax(22rem, .65fr) minmax(0, 1.35fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    column-gap: clamp(.1rem, .1vw, 2rem);
+    row-gap: clamp(.75rem, 1.8vh, 1.5rem);
+  }
+
+  .about-narrative__identity h2 {
+  max-width: 26rem;
+}
+
+  .about--narrative > .section-label {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .about-narrative__intro {
+    display: contents;
+  }
+
+  .about-narrative__identity {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(1rem, 2.5vh, 1.75rem);
+  }
+
+  .profile-frame {
+    width: clamp(13rem, min(16vw, 33vh), 18rem);
+  }
+
+  .about-narrative__copy {
+    transform: translateY(-1.5rem);
+    grid-column: 2;
+    grid-row: 2;
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 5rem);
+    align-self: start;
+    padding-top: clamp(1rem, 5vh, 3.5rem);
+  }
+
+  .about-narrative__copy p + p {
+    margin-top: 0;
+  }
+
+  .approach-flow {
+    grid-column: 2;
+    grid-row: 3;
+    width: 113.5%;
+    margin: 0;
+    transform: translateX(clamp(-8rem, -5vw, -16rem)) translateY(clamp(2rem, 1vw, 5rem));
   }
 }
 

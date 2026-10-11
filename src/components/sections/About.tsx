@@ -22,7 +22,7 @@ export function About() {
         </div>
       </div>
       <ol className="approach-flow">
-        {approach.map(([index, title, text]) => <li key={index}><span>{index}</span><div><h3>{title}</h3><p>{text}</p></div><i aria-hidden="true" /></li>)}
+        {approach.map(([index, title, text]) => <li key={index}><span>{index}</span><div><i aria-hidden="true" /><h3>{title}</h3><p>{text}</p></div></li>)}
       </ol>
     </section>
   )
