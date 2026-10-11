@@ -702,51 +702,7 @@ body, .header, .hero, .projects, .project-explorer, .about, .technologies, .how-
   [data-theme='light'] .nav li { border-color: var(--line-dark); }
 }
 
-/* Viewport-sized section rhythm
-   Content-heavy sections may grow beyond one screen, but never finish before
-   filling it. The hero is compacted on short desktop displays so its complete
-   composition remains visible below the persistent header. */
-main > section,
-.contact {
-  min-height: 100svh;
-  min-height: 100dvh;
-  scroll-margin-top: 0;
-}
-
-/* Prevent sub-pixel seams where two independently painted section gradients meet. */
-main > section + section {
-  margin-top: -1px;
-}
-
-@media (min-width: 1121px) and (max-height: 900px) {
-  .hero--workspace {
-    height: 100svh;
-    height: 100dvh;
-    min-height: 40rem;
-    padding-top: 5.5rem;
-    padding-bottom: 1rem;
-  }
-
-  .hero__meta { padding-bottom: .75rem; }
-
-  .hero__workspace {
-    min-height: 0;
-    height: calc(100% - 6.75rem);
-    gap: clamp(2rem, 4vw, 4.5rem);
-    padding: 1rem 0 1.5rem;
-  }
-
-  .hero--workspace h1 {
-    font-size: clamp(3.35rem, min(7.2vw, 9vh), 7rem);
-  }
-
-  .hero__description { margin-top: 1.25rem; }
-  .hero--workspace .hero__actions { margin-top: 1.25rem; }
-  .hero__runtime { margin-top: 1.25rem; }
-  .hero__workbench { padding: .5rem 0 2rem; }
-  .code-lines { min-height: clamp(17rem, 37vh, 25rem); }
-  .tool-dock { min-height: 3rem; padding-block: .45rem; }
-}
+/* Viewport composition is consolidated below, after the theme joins. */
 
 /* Soft background joins
    Each boundary shares the same 50/50 color at both sides. The blend is split
@@ -882,52 +838,6 @@ main > section + section {
   :root { --section-blend-half: clamp(8rem, 38vw, 11rem); }
 }
 
-/* Compact workbench for laptop/tablet widths. This final override uses real
-   box dimensions so the tools dock always has a clear, non-overlapping lane. */
-@media (min-width: 521px) and (max-width: 1400px) {
-  .hero__workbench {
-    width: min(80%, 34rem);
-    padding-bottom: 3rem;
-  }
-
-  .hero__editor { width: 100%; }
-
-  .window-frame.code-editor,
-  .window-frame.code-editor:hover {
-    transform: rotate(0);
-  }
-
-  .code-lines {
-    height: 15rem;
-    min-height: 0;
-    font-size: clamp(.48rem, .62vw, .62rem);
-    line-height: 1.35;
-  }
-
-  .workflow-panel {
-    right: -1rem;
-    bottom: 3.5rem;
-    width: min(12.5rem, 44%);
-  }
-
-  .workflow-step {
-    grid-template-columns: 1.2rem 1fr auto;
-    gap: .3rem;
-    min-height: 1.95rem;
-    padding: .15rem .3rem;
-  }
-
-  .workflow-step:not(:last-child)::after {
-    left: .9rem;
-    top: 1.55rem;
-    height: .7rem;
-  }
-
-  .workflow-step small { font-size: .42rem; }
-  .workflow-step strong { font-size: .52rem; }
-  .workflow-step__status { font-size: .35rem; }
-}
-
 [data-theme='light'] {
   --section-blend-half: clamp(12rem, 14vw, 17rem);
 }
@@ -936,57 +846,424 @@ main > section + section {
   [data-theme='light'] { --section-blend-half: clamp(9rem, 42vw, 12rem); }
 }
 
-/* Definitive compact size for the complete workspace component. */
-.hero__workbench {
-  width: min(100%, 42rem);
-  justify-self: end;
-  margin-inline: auto;
-  padding: .5rem 0 0rem;
+/* Unified viewport composition
+   Desktop sections use the available block size as a layout input. Media keeps
+   its intrinsic ratio; text-heavy states are allowed to grow instead of being
+   clipped. Narrow layouts remain in the normal document flow. */
+main > section,
+.contact {
+  scroll-margin-top: 4.5rem;
 }
 
-.hero__editor { width: 100%; }
-
-.window-frame.code-editor {
-  transform: rotate(-.6deg);
+main > section + section {
+  margin-top: -1px;
 }
 
-.window-frame.code-editor:hover {
-  transform: rotate(0) translateY(-4px);
+@media (min-width: 1024px) {
+  :root {
+    --viewport-section-padding: clamp(1.25rem, 2.5vh, 2.25rem);
+    --viewport-section-top: clamp(4.75rem, 8.5vh, 6rem);
+    --viewport-content-gap: clamp(.75rem, 1.8vh, 1.5rem);
+  }
+
+  main > section,
+  .contact {
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  /* Hero */
+  .hero--workspace {
+    height: 100svh;
+    height: 100dvh;
+    min-height: 43.75rem;
+    padding: var(--viewport-section-top) var(--page-padding) var(--viewport-section-padding);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: clamp(.5rem, 1.2vh, 1rem);
+  }
+
+  .hero__meta { padding-bottom: clamp(.55rem, 1.2vh, 1rem); }
+
+  .hero__workspace {
+    grid-template-columns: minmax(0, 1.02fr) minmax(27rem, .98fr);
+    gap: clamp(2rem, 4vw, 5rem);
+    min-height: 0;
+    height: auto;
+    padding: 0;
+  }
+
+  .hero--workspace h1 {
+    font-size: clamp(3.35rem, min(6.6vw, 8.5vh), 7.4rem);
+  }
+
+  .hero__description {
+    margin-top: clamp(.9rem, 1.8vh, 1.5rem);
+    line-height: 1.6;
+  }
+
+  .hero--workspace .hero__actions,
+  .hero__runtime { margin-top: clamp(.8rem, 1.8vh, 1.4rem); }
+
+  .hero__workbench {
+    width: min(100%, 38rem);
+    justify-self: end;
+    margin-inline: auto;
+    padding: 0 0 clamp(2.2rem, 5vh, 3.5rem);
+  }
+
+  .hero__editor { width: 100%; }
+
+  .window-frame.code-editor {
+    transform: rotate(-.6deg);
+    transition: transform 550ms cubic-bezier(.22, 1, .36, 1), box-shadow 550ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .window-frame.code-editor:hover {
+    transform: rotate(0) translateY(-4px);
+  }
+
+  .code-lines {
+    height: clamp(12.5rem, 28vh, 18rem);
+    min-height: 0;
+    padding-block: .35rem;
+    overflow: hidden;
+    font-size: clamp(.54rem, min(.68vw, 1.3vh), .69rem);
+    line-height: 1.35;
+  }
+
+  .code-line { min-height: 0; }
+
+  .workflow-panel {
+    right: -.75rem;
+    bottom: clamp(1.5rem, 3.5vh, 2.5rem);
+    width: min(14rem, 45%);
+  }
+
+  .workflow-panel__header { height: 1.7rem; }
+  .workflow-panel ol { padding: .25rem; }
+  .workflow-step { grid-template-columns: 1.15rem 1fr auto; gap: .25rem; min-height: 1.9rem; padding: .12rem .28rem; }
+  .workflow-step:not(:last-child)::after { left: .82rem; top: 1.4rem; height: .62rem; }
+  .workflow-step strong { font-size: .54rem; }
+  .workflow-step small { font-size: .43rem; }
+  .workflow-step__status { padding: .17rem .25rem; font-size: .36rem; }
+  .tool-dock { min-height: 3rem; padding-block: .45rem; }
+
+  /* Projects */
+  .projects--explorer {
+    height: calc(100svh - 4.5rem);
+    height: calc(100dvh - 4.5rem);
+    min-height: 39rem;
+    padding: var(--viewport-section-top) var(--page-padding) var(--viewport-section-padding);
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: clamp(.45rem, 1.1vh, .85rem);
+  }
+
+  .projects__heading {
+    padding-bottom: clamp(.2rem, .6vh, .5rem);
+  }
+
+  .projects h2 {
+    font-size: clamp(2.8rem, min(5.7vw, 7vh), 6rem);
+  }
+
+  .projects__heading > p { line-height: 1.45; }
+
+  .project-selector {
+    margin-bottom: 0;
+  }
+
+  .project-selector__item {
+    padding: clamp(.4rem, 1vh, .75rem) clamp(.8rem, 1.5vw, 1.25rem);
+  }
+
+  .project-explorer,
+  .project-explorer--rift-deck,
+  .project-explorer--myfinteem {
+    grid-template-columns: minmax(15rem, .6fr) minmax(0, 1.65fr);
+    gap: clamp(1.25rem, 2.5vw, 3rem);
+    min-height: 0;
+    height: 100%;
+    padding: clamp(.85rem, 1.8vh, 1.4rem);
+    align-items: center;
+  }
+
+  .project-explorer__copy {
+    align-self: stretch;
+    min-height: 0;
+    padding: clamp(.4rem, 1vh, .8rem) 0;
+  }
+
+  .project-explorer h3 {
+    margin: clamp(.55rem, 1.2vh, 1rem) 0 clamp(.65rem, 1.5vh, 1.15rem);
+    font-size: clamp(2.25rem, min(4vw, 7vh), 5rem);
+  }
+
+  .project-explorer__description { line-height: 1.5; }
+  .project-explorer__contribution { margin-top: clamp(.6rem, 1.3vh, 1rem); }
+
+  .project-explorer__copy > a,
+  .project-explorer__pending {
+    padding: clamp(.6rem, 1.3vh, 1rem) 0;
+  }
+
+  .project-explorer__window {
+    width: min(100%, calc((100dvh - 29.9rem) * 1.95));
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+    justify-self: end;
+    align-self: center;
+  }
+
+  .project-explorer__window--rift-deck .project-explorer__viewport,
+  .project-explorer__window--myfinteem .project-explorer__viewport {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1917 / 909;
+    overflow: hidden;
+  }
+
+  .project-explorer__placeholder,
+  .project-explorer__window--rift-deck .project-explorer__placeholder,
+  .project-explorer__window--myfinteem .project-explorer__placeholder {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1917 / 909;
+  }
+
+  .rift-mark { width: clamp(8rem, min(16vw, 25vh), 16rem); }
+  .project-panel { padding: clamp(.6rem, 1.5vh, 1.1rem); }
+  .project-panel h4 { margin: clamp(.7rem, 1.5vh, 1.2rem) 0 .6rem; }
+  .project-panel dl { margin-top: clamp(.8rem, 1.8vh, 1.4rem); }
+  .project-panel--stack > div { margin-top: clamp(.65rem, 1.5vh, 1rem); }
+  .project-panel--stack > div span { padding: .5rem; }
+  .project-overview__grid { gap: clamp(.45rem, .8vw, .7rem); margin-top: clamp(.35rem, 1vh, .8rem); }
+  .project-overview__item { padding: clamp(.35rem, 1vh, .75rem); }
+  .project-overview__item h4 { margin: clamp(.35rem, 1vh, .75rem) 0 clamp(.3rem, .8vh, .5rem); }
+  .project-overview__item p { font-size: clamp(.68rem, min(.88vw, 1.4vh), .86rem); line-height: 1.35; }
+  .project-pagination { padding-top: 0; }
+  .project-pagination button { width: clamp(2.35rem, 5vh, 3rem); height: clamp(2.35rem, 5vh, 3rem); }
+
+  /* About */
+  .about--narrative {
+    height: calc(100svh - 4.5rem);
+    height: calc(100dvh - 4.5rem);
+    min-height: 39rem;
+    padding: var(--viewport-section-top) var(--page-padding) var(--viewport-section-padding);
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    gap: var(--viewport-content-gap);
+  }
+
+  .about-narrative__intro {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, .85fr);
+    gap: clamp(2rem, 4vw, 5rem);
+    align-items: center;
+    margin: 0;
+  }
+
+  .about-narrative__identity {
+    grid-template-columns: minmax(0, 1fr) clamp(8rem, 19vh, 11rem);
+    gap: clamp(1.25rem, 2.5vw, 3rem);
+    align-items: center;
+  }
+
+  .about h2 {
+    font-size: clamp(2.8rem, min(5.7vw, 7vh), 6rem);
+  }
+
+  .profile-frame {
+    left: auto;
+    top: auto;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    margin: 0;
+  }
+
+  .about-narrative__copy {
+    max-width: 34rem;
+    margin: 0;
+    padding-top: clamp(.75rem, 1.6vh, 1.25rem);
+    transform: none;
+  }
+
+  .about-narrative__copy p { font-size: clamp(.88rem, min(1vw, 1.8vh), 1.05rem); line-height: 1.55; }
+  .about-narrative__copy p + p { margin-top: clamp(.65rem, 1.4vh, 1rem); }
+
+  .approach-flow {
+    width: min(68rem, 82%);
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0 clamp(1.25rem, 3vw, 3rem);
+  }
+
+  .approach-flow li {
+    grid-template-columns: 2.2rem 1fr .7rem;
+    gap: clamp(.65rem, 1vw, 1rem);
+    min-height: 0;
+    padding: clamp(.55rem, 1.4vh, 1rem) 0;
+  }
+
+  .approach-flow h3 { margin-bottom: .35rem; font-size: clamp(1.25rem, min(2vw, 3vh), 2rem); }
+  .approach-flow p { font-size: clamp(.76rem, min(.9vw, 1.5vh), .95rem); line-height: 1.45; }
+
+  /* Technologies */
+  .technologies--ecosystem {
+    height: calc(100svh - 4.5rem);
+    height: calc(100dvh - 4.5rem);
+    min-height: 39rem;
+    padding: var(--viewport-section-top) var(--page-padding) var(--viewport-section-padding);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--viewport-content-gap);
+  }
+
+  .technologies__intro {
+    margin-bottom: 0;
+  }
+
+  .technologies h2 {
+    font-size: clamp(2.8rem, min(5.5vw, 7vh), 5.8rem);
+  }
+
+  .tool-ecosystem {
+    grid-template-columns: minmax(0, 1.5fr) minmax(18rem, .5fr);
+    gap: clamp(1.5rem, 3vw, 4rem);
+    align-items: center;
+    min-height: 0;
+  }
+
+  .tool-ecosystem__nodes {
+    align-content: center;
+    padding: clamp(.75rem, 1.8vh, 1.5rem);
+  }
+
+  .tool-node {
+    flex: 1 1 7rem;
+    min-width: 6.75rem;
+    padding: clamp(.6rem, 1.35vh, .9rem);
+  }
+
+  .tool-inspector {
+    position: relative;
+    top: auto;
+    min-height: 0;
+    padding: clamp(3rem, 7vh, 4rem) clamp(1.1rem, 2vw, 2rem) clamp(1rem, 2.5vh, 1.75rem);
+  }
+
+  .tool-inspector h3 { margin: clamp(.45rem, 1vh, .8rem) 0 clamp(.65rem, 1.5vh, 1.1rem); font-size: clamp(2.2rem, min(4vw, 6vh), 4rem); }
+  .tool-inspector > p { line-height: 1.55; }
+  .tool-inspector > div:last-child { margin-top: clamp(.8rem, 1.8vh, 1.4rem); }
+
+  /* How I work */
+  .how-work {
+    height: calc(100svh - 4.5rem);
+    height: calc(100dvh - 4.5rem);
+    min-height: 39rem;
+    padding: var(--viewport-section-top) var(--page-padding) var(--viewport-section-padding);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--viewport-content-gap);
+  }
+
+  .how-work__intro {
+    grid-template-columns: .72fr 2fr 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    margin-bottom: 0;
+  }
+
+  .how-work h2 { font-size: clamp(2.8rem, min(5.7vw, 7vh), 6rem); }
+  .how-work__intro > p { line-height: 1.5; }
+
+  .goal-builder {
+    grid-template-columns: minmax(16rem, .5fr) minmax(0, 1.5fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  .goal-builder__controls button { padding: clamp(.65rem, 1.5vh, 1rem); }
+
+  .goal-builder__preview {
+    height: min(48vh, 31rem);
+    min-height: 0;
+    align-self: center;
+  }
+
+  .mini-site-wrap { height: calc(100% - 2.1rem); padding: clamp(.65rem, 1.5vh, 1rem); }
+  .mini-site { height: 100%; min-height: 0; }
+  .mini-site nav { padding: clamp(.65rem, 1.4vh, 1rem) 1.25rem; }
+  .mini-site main { padding: clamp(1rem, min(2.8vw, 3.5vh), 2.5rem); }
+  .mini-site h4 { margin: clamp(.7rem, 1.5vh, 1.2rem) 0; font-size: clamp(1.75rem, min(3.5vw, 5vh), 3.5rem); }
+  .mini-product { min-height: 0; aspect-ratio: 1 / 1; }
+
+  /* Contact */
+  .contact--form {
+    height: calc(100svh - 4.5rem);
+    height: calc(100dvh - 4.5rem);
+    min-height: 39rem;
+    padding: var(--viewport-section-top) var(--page-padding) var(--viewport-section-padding);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: var(--viewport-content-gap);
+  }
+
+  .contact-form-layout {
+    grid-template-columns: minmax(0, .9fr) minmax(25rem, 1.1fr);
+    gap: clamp(3rem, 7vw, 8rem);
+    align-items: center;
+    margin: 0;
+    min-height: 0;
+  }
+
+  .contact-form-layout__intro h2 { font-size: clamp(3.1rem, min(5.7vw, 8vh), 6.5rem); }
+  .contact-form-layout__intro > span { margin-top: clamp(.8rem, 1.8vh, 1.5rem); }
+  .contact-form label { gap: .5rem; padding: clamp(.55rem, 1.35vh, 1rem) 0; }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea { font-size: clamp(.9rem, min(1.05vw, 1.8vh), 1.05rem); }
+  .contact-form textarea { min-height: clamp(3.5rem, 8vh, 5rem); }
+  .contact-form__privacy { margin-block: clamp(.4rem, 1vh, .75rem); }
+  .contact-form__submit { margin-top: .25rem; padding: clamp(.7rem, 1.5vh, 1rem); }
+  .contact-form__status { min-height: clamp(1.7rem, 3.5vh, 2.4rem); padding-top: .55rem; }
+  .contact__footer { padding-top: clamp(.65rem, 1.4vh, 1rem); }
 }
 
-.code-lines {
-  height: 18rem;
-  min-height: 0;
-  padding-block: .35rem;
-  overflow: hidden;
-  font-size: .66rem;
-  line-height: 1.35;
+/* Very short desktop windows keep natural page scrolling. Nothing is hidden. */
+@media (min-width: 1024px) and (max-height: 699px) {
+  .hero--workspace,
+  .projects--explorer,
+  .about--narrative,
+  .technologies--ecosystem,
+  .how-work,
+  .contact--form {
+    height: auto;
+  }
 }
 
-.code-line { min-height: 0; }
+@media (max-width: 1023px) {
+  main > section,
+  .contact { min-height: auto; }
 
-.workflow-panel {
-  right: -.75rem;
-  bottom: 2.5rem;
-  width: min(15rem, 46%);
+  .about-narrative__copy { transform: none; }
+  .profile-frame { left: auto; top: auto; margin-left: 0; }
+  .tool-inspector { top: auto; }
+
+  .project-explorer__window--rift-deck .project-explorer__viewport,
+  .project-explorer__window--myfinteem .project-explorer__viewport {
+    height: auto;
+    aspect-ratio: auto;
+    overflow: visible;
+  }
+
+  .project-explorer__window--rift-deck .project-explorer__placeholder,
+  .project-explorer__window--myfinteem .project-explorer__placeholder {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1917 / 909;
+  }
 }
-
-.workflow-panel__header { height: 1.7rem; }
-.workflow-panel ol { padding: .25rem; }
-
-.workflow-step {
-  grid-template-columns: 1.15rem 1fr auto;
-  gap: .25rem;
-  min-height: 2rem;
-  padding: .12rem .28rem;
-}
-
-.workflow-step:not(:last-child)::after {
-  left: .82rem;
-  top: 1.45rem;
-  height: .65rem;
-}
-
-.workflow-step strong { font-size: .54rem; }
-.workflow-step small { font-size: .43rem; }
-.workflow-step__status { padding: .17rem .25rem; font-size: .36rem; }
