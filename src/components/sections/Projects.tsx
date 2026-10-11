@@ -75,7 +75,6 @@ export function Projects() {
 
   return (
     <section className="projects projects--explorer" id="proyectos" aria-labelledby="projects-title">
-      <div className="projects__bridge" aria-hidden="true"><span>02</span><i /><span>{t('projects.bridge')}</span><i /></div>
       <div className="projects__heading">
         <SectionLabel index="01">{t('projects.label')}</SectionLabel>
         <h2 id="projects-title">{t('projects.title1')}<br /><em>{t('projects.title2')}</em></h2>
