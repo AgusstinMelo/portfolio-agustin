@@ -6,7 +6,7 @@ import { PreferenceControls } from '../ui/PreferenceControls'
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const { t } = usePreferences()
-  const labels = [t('nav.projects'), t('nav.about'), t('nav.technologies'), t('nav.process'), t('nav.contact')]
+  const labels = [t('nav.projects'), t('nav.about'), t('nav.technologies'), t('nav.contact')]
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', isOpen)

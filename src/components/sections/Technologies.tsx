@@ -14,7 +14,7 @@ export function Technologies() {
   const { t } = usePreferences()
   return (
     <section className="technologies technologies--ecosystem" id="tecnologias" aria-labelledby="technologies-title">
-      <div className="technologies__intro"><SectionLabel index="03">{t('tech.label')}</SectionLabel><h2 id="technologies-title">{t('tech.title1')}<br /><em>{t('tech.title2')}</em></h2></div>
+      <div className="technologies__intro"><SectionLabel index="03" light>{t('tech.label')}</SectionLabel><h2 id="technologies-title">{t('tech.title1')}<br /><em>{t('tech.title2')}</em></h2></div>
       <div className="tool-ecosystem">
         <div className="tool-ecosystem__nodes" aria-label={t('tech.select')}>
           {Object.entries(tools).map(([name, info]) => {

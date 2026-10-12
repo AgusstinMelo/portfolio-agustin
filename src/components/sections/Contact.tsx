@@ -39,7 +39,7 @@ export function Contact() {
 
   return (
     <footer className="contact contact--form" id="contacto">
-      <SectionLabel index="05" light>{t('contact.label')}</SectionLabel>
+      <SectionLabel index="04" light>{t('contact.label')}</SectionLabel>
       <div className="contact-form-layout">
         <div className="contact-form-layout__intro"><p>{t('contact.kicker')}</p><h2>{t('contact.title1')}<br /><em>{t('contact.title2')}</em></h2><span>{t('contact.note')}</span></div>
         <form className="contact-form" onSubmit={submit} noValidate>
