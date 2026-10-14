@@ -1,6 +1,6 @@
 import { ArrowIcon } from '../ui/ArrowIcon'
 import { CodeEditor } from '../ui/CodeEditor'
-import { ToolDock, WorkflowPanel } from '../ui/WorkflowPanel'
+import { WorkflowPanel } from '../ui/WorkflowPanel'
 import { usePreferences } from '../../contexts/PreferencesContext'
 
 export function Hero() {
@@ -36,8 +36,6 @@ export function Hero() {
           <WorkflowPanel />
         </div>
       </div>
-
-      <ToolDock />
 
     </section>
   )

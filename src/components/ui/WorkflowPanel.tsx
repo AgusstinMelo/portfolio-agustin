@@ -26,15 +26,3 @@ export function WorkflowPanel() {
     </div>
   )
 }
-
-export function ToolDock() {
-  const { t } = usePreferences()
-  return (
-    <div className="tool-dock" aria-label={t('workflow.tools')}>
-      <span className="tool-dock__label">{t('workflow.tools')} /</span>
-      <div className="tool-dock__items">
-        <span>TypeScript</span><span>React</span><span>Next.js</span><span>Supabase</span><span>Python</span><span>Git</span>
-      </div>
-    </div>
-  )
-}

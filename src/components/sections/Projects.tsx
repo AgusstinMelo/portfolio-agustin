@@ -7,6 +7,7 @@ import { WindowFrame } from '../ui/WindowFrame'
 import { usePreferences } from '../../contexts/PreferencesContext'
 import type { TranslationKey } from '../../i18n/translations'
 import riftDeckPreviewVideo from '../../assets/rift-deck-preview.mp4'
+import myfinteemPreview from '../../assets/myfinteem-preview.png'
 
 type ProjectTab = 'preview' | 'overview' | 'stack'
 
@@ -24,6 +25,17 @@ function ProjectPlaceholder({ project }: { project: Project }) {
           loop
           playsInline
           preload="metadata"
+        />
+      </div>
+    )
+  }
+  if (project.id === 'myfinteem') {
+    return (
+      <div className={`project-explorer__placeholder project-visual--${project.id}`}>
+        <img
+          className="project-visual__image"
+          src={myfinteemPreview}
+          alt={`${t('projects.preview')}: ${project.name}`}
         />
       </div>
     )

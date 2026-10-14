@@ -1,6 +1,7 @@
 import type { Project, TechnologyGroup } from '../types/content'
 
 export const navItems = [
+  { label: 'Presentación', href: '#inicio' },
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Sobre mí', href: '#sobre-mi' },
   { label: 'Tecnologías', href: '#tecnologias' },
@@ -16,7 +17,7 @@ export const projects: Project[] = [
     description:
       'Una aplicación web relacionada con League of Legends: Wild Rift, pensada para convertir información del juego en una experiencia clara y útil.',
     contribution: 'Proyecto de desarrollo web.',
-    technologies: ['Python', 'React', 'TypeScript', 'Next.js', 'APIs Rest', 'Supabase','SQL', 'IA Integration', 'Vite', 'Vercel'],
+    technologies: ['Python', 'React', 'JavaScript', 'TypeScript', 'Next.js', 'APIs Rest', 'Supabase','SQL', 'IA Integration', 'Vite', 'Vercel', 'Git', 'GitHub'],
     url: 'https://www.riftdeck.com.ar',
     tone: 'dark',
   },
@@ -28,8 +29,8 @@ export const projects: Project[] = [
     description:
       'Un proyecto colaborativo cuya historia, alcance y contribución se documentarán aquí con detalle.',
     contribution: 'Participación pendiente de completar.',
-    technologies: ['JavaScript', 'React', 'Git'],
-    tone: 'light',
+    technologies: ['React', 'JavaScript', 'TypeScript', 'Next.js', 'Supabase','SQL', 'IA Integration', 'Vite', 'Vercel', 'Git', 'GitHub'],
+    tone: 'dark',
   },
 ]
 
@@ -37,13 +38,13 @@ export const technologyGroups: TechnologyGroup[] = [
   { title: 'Lenguajes', items: ['JavaScript', 'TypeScript', 'Python', 'C / C++'] },
   { title: 'Frontend', items: ['React', 'Next.js', 'Vite'] },
   { title: 'Datos y servicios', items: ['SQL', 'Supabase', 'APIs REST'] },
-  { title: 'Herramientas y despliegue', items: ['Git', 'GitHub', 'Vercel'] },
-  { title: 'Desarrollo asistido por IA', items: ['Codex'] },
+  { title: 'Herramientas y despliegue', items: ['Git', 'GitHub', 'BitBucket', 'Jira', 'Vercel'] },
+  { title: 'Desarrollo asistido por IA', items: ['IA Integration'] },
 ]
 
 export const socialLinks = {
   email: '',
-  github: '',
-  linkedin: '',
-  resume: '',
+  github: 'https://github.com/AgusstinMelo',
+  linkedin: 'https://www.linkedin.com/in/agust%C3%ADn-melo-6831a680/',
+  resume: '/cv-agustin-melo.pdf',
 }
