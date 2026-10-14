@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { projects, technologyGroups } from '../../data/content'
+import { projects, technologies } from '../../data/content'
 import { usePreferences } from '../../contexts/PreferencesContext'
 import type { TranslationKey } from '../../i18n/translations'
 import { SectionLabel } from '../ui/SectionLabel'
@@ -41,8 +41,23 @@ const tools: Record<string, ToolInfo> = {
   'IA Integration': { category: 'tech.integrations', description: 'tech.aiIntegration', use: 'tech.use.aiIntegration', logo: aiLogo },
 }
 
-const names = [...new Set(technologyGroups.flatMap((group) => group.items))]
-const canonicalTechnology = (name: string) => name === 'APIs Rest' ? 'APIs REST' : name
+const names = [...technologies]
+// Kept off until the relationship view has a final interaction design.
+const SHOW_TECH_RELATIONSHIPS = false
+const technologyRelations = [
+  ['JavaScript', 'TypeScript'], ['JavaScript', 'React'], ['JavaScript', 'Vite'],
+  ['TypeScript', 'React'], ['TypeScript', 'Next.js'], ['TypeScript', 'Vite'], ['TypeScript', 'IA Integration'],
+  ['React', 'Next.js'], ['React', 'Vite'], ['React', 'Supabase'], ['React', 'APIs REST'],
+  ['Next.js', 'Supabase'], ['Next.js', 'Vercel'], ['Vite', 'Vercel'],
+  ['Python', 'SQL'], ['Python', 'APIs REST'], ['Python', 'IA Integration'],
+  ['SQL', 'Supabase'], ['SQL', 'IA Integration'], ['Supabase', 'APIs REST'],
+  ['Supabase', 'IA Integration'], ['APIs REST', 'IA Integration'],
+  ['Git', 'GitHub'], ['Git', 'BitBucket'], ['GitHub', 'Jira'], ['GitHub', 'Vercel'],
+  ['BitBucket', 'Jira'], ['BitBucket', 'Vercel'],
+] as const
+
+const connectionsFor = (name: string) => names.filter((candidate) => technologyRelations.some(([from, to]) =>
+  (from === name && to === candidate) || (to === name && from === candidate)))
 const clampScale = (scale: number) => Math.min(1.6, Math.max(.65, scale))
 
 export function Technologies() {
@@ -53,9 +68,10 @@ export function Technologies() {
   const dragRef = useRef<{ pointerId: number; x: number; y: number; originX: number; originY: number } | null>(null)
   const nodeRefs = useRef(new Map<string, HTMLButtonElement>())
   const current = tools[selected]
+  const currentConnections = SHOW_TECH_RELATIONSHIPS ? connectionsFor(selected) : []
   const { t } = usePreferences()
 
-  const usages = projects.filter((project) => project.technologies.some((technology) => canonicalTechnology(technology) === selected))
+  const usages = projects.filter((project) => project.technologies.includes(selected))
   const zoomAt = (nextScale: number, originX?: number, originY?: number) => {
     const viewport = viewportRef.current
     if (!viewport) return
@@ -109,7 +125,7 @@ export function Technologies() {
     <section className="technologies technologies--ecosystem" id="tecnologias" aria-labelledby="technologies-title">
       <div className="technologies__intro">
         <SectionLabel index="03" light>{t('tech.label')}</SectionLabel>
-        <div><h2 id="technologies-title">{t('tech.title1')}<br /><em>{t('tech.title2')}</em></h2><p>{t('tech.introSolo')}</p></div>
+        <div><h2 id="technologies-title">{t('tech.title1')}<br /><em>{t('tech.title2')}</em></h2><p>{t('tech.intro')}</p></div>
       </div>
 
       <div className="tool-ecosystem">
@@ -123,7 +139,7 @@ export function Technologies() {
           <div className="tool-ecosystem__nodes" role="list" aria-label={t('tech.select')} style={{ transform: `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.scale})` }}>
             {names.map((name, index) => {
               const info = tools[name]
-              const state = selected === name ? ' tool-node--selected' : ''
+              const state = selected === name ? ' tool-node--selected' : SHOW_TECH_RELATIONSHIPS && currentConnections.includes(name) ? ' tool-node--connected' : ''
               return <button type="button" role="listitem" className={`tool-node tool-node--${index + 1}${state}`} aria-pressed={selected === name} onClick={() => setSelected(name)} onKeyDown={(event) => chooseWithKeyboard(event, index)} ref={(node) => { if (node) nodeRefs.current.set(name, node); else nodeRefs.current.delete(name) }} key={name}><span className={`tool-node__mark${info.fillLogo ? ' tool-node__mark--fill' : ''}${info.largeLogo ? ' tool-node__mark--large' : ''}`} aria-hidden="true"><img src={info.logo} alt="" /></span><span className="tool-node__category">{t(info.category)}</span><strong>{name}</strong></button>
             })}
           </div>
@@ -133,6 +149,7 @@ export function Technologies() {
           <div className="tool-inspector__bar"><span>{t('tech.inspector')}</span><i /></div>
           <div className="tool-inspector__identity"><span className="tool-inspector__category">{t(current.category)}</span><span className={`tool-inspector__logo${current.fillLogo ? ' tool-inspector__logo--fill' : ''}${current.largeLogo ? ' tool-inspector__logo--large' : ''}`} aria-hidden="true"><img src={current.logo} alt="" /></span></div>
           <h3>{selected}</h3><p>{t(current.description)}</p>
+          {SHOW_TECH_RELATIONSHIPS && <div className="tool-inspector__section"><span>{t('tech.related')}</span><strong>{currentConnections.length ? currentConnections.join(' · ') : t('tech.independent')}</strong></div>}
           <div className="tool-inspector__section"><span>{t('tech.primaryUse')}</span><strong>{t(current.use)}</strong></div>
           <div className="tool-inspector__section tool-inspector__usage"><span>{t('tech.usedIn')}</span>{usages.length ? usages.map((project) => <a href="#proyectos" key={project.id}>{project.name}<b>↗</b></a>) : <small>{t('tech.noUsage')}</small>}</div>
         </aside>

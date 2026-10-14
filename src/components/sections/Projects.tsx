@@ -99,7 +99,7 @@ export function Projects() {
           </button>
         ))}
       </div>
-      <article className={`project-explorer project-explorer--${project.tone} project-explorer--${project.id}`} key={project.id}>
+      <article className={`project-explorer project-explorer--${project.id}`} key={project.id}>
         <div className="project-explorer__copy">
           <p>{eyebrow}</p><h3>{project.name}</h3>
           <p className="project-explorer__description">{description}</p>
