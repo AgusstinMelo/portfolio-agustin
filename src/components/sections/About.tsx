@@ -1,4 +1,5 @@
 import { SectionLabel } from '../ui/SectionLabel'
+import { CodeWatermark } from '../ui/CodeWatermark'
 import { usePreferences } from '../../contexts/PreferencesContext'
 import profilePhoto from '../../assets/agustin-profile.png'
 
@@ -21,6 +22,7 @@ export function About() {
           <p>{t('about.introDetail')}</p>
         </div>
       </div>
+      <CodeWatermark className="about-code-watermark" />
       <ol className="approach-flow">
         {approach.map(([index, title, text]) => <li key={index}><span>{index}</span><div><i aria-hidden="true" /><h3>{title}</h3><p>{text}</p></div></li>)}
       </ol>

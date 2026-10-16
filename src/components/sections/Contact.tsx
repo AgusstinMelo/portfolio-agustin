@@ -1,7 +1,8 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { socialLinks } from '../../data/content'
 import { sendContact, type ContactPayload } from '../../services/contact'
 import { ArrowIcon } from '../ui/ArrowIcon'
+import { CodeWatermark } from '../ui/CodeWatermark'
 import { SectionLabel } from '../ui/SectionLabel'
 import { usePreferences } from '../../contexts/PreferencesContext'
 import type { TranslationKey } from '../../i18n/translations'
@@ -9,17 +10,12 @@ import type { TranslationKey } from '../../i18n/translations'
 type Errors = Partial<Record<keyof ContactPayload, string>>
 type FormStatus = 'idle' | 'sending' | 'success' | 'error'
 const initialForm: ContactPayload = { name: '', email: '', inquiryType: '', message: '' }
-const backgroundCode = ['while (curious) {', '  learn();', '  build();', '}']
 const inquiryTypeKeys: Record<string, TranslationKey> = {
   website: 'contact.web',
   application: 'contact.app',
   improvement: 'contact.improve',
   job: 'contact.job',
   other: 'contact.other',
-}
-
-function getDayOfYear(date: Date) {
-  return Math.floor((Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 86_400_000)
 }
 
 function validate(form: ContactPayload, t: ReturnType<typeof usePreferences>['t']): Errors {
@@ -36,23 +32,8 @@ export function Contact() {
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<FormStatus>('idle')
   const [honeypot, setHoneypot] = useState('')
-  const [firstLine, setFirstLine] = useState(() => getDayOfYear(new Date()))
   const { t } = usePreferences()
   const update = (field: keyof ContactPayload, value: string) => { setForm((current) => ({ ...current, [field]: value })); setErrors((current) => ({ ...current, [field]: undefined })); if (status !== 'idle') setStatus('idle') }
-
-  useEffect(() => {
-    let timer = 0
-    const scheduleNextDay = () => {
-      const now = new Date()
-      const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-      timer = window.setTimeout(() => {
-        setFirstLine(getDayOfYear(new Date()))
-        scheduleNextDay()
-      }, nextDay.getTime() - now.getTime() + 1000)
-    }
-    scheduleNextDay()
-    return () => window.clearTimeout(timer)
-  }, [])
 
   const submit = async (event: FormEvent) => {
     event.preventDefault()
@@ -82,9 +63,7 @@ export function Contact() {
   return (
     <footer className="contact contact--form" id="contacto">
       <SectionLabel index="04" light>{t('contact.label')}</SectionLabel>
-      <div className="contact-code-watermark" aria-hidden="true">
-        {backgroundCode.map((line, index) => <div key={line}><span>{firstLine + index}</span><code>{line}</code></div>)}
-      </div>
+      <CodeWatermark className="contact-code-watermark" />
       <div className="contact-form-layout">
         <div className="contact-form-layout__intro"><p>{t('contact.kicker')}</p><h2>{t('contact.title1')}<br /><em>{t('contact.title2')}</em></h2><span>{t('contact.note')}</span></div>
         <form className="contact-form" onSubmit={submit} noValidate>

@@ -206,6 +206,7 @@ a:hover .arrow--up-right { transform: rotate(-45deg) translateX(4px); }
 .about-narrative__copy { width: 100%; max-width: 31rem; margin-top: clamp(6rem,9vw,10rem); padding-top: 1.5rem; transform: translateX(-4rem); border-top: 1px solid var(--line-light); }
 .about-narrative__copy p { margin: 0; color: #fff; font-size: 1.05rem; font-weight: 400; line-height: 1.7; opacity: .78; }
 .about-narrative__copy p + p { margin-top: 1.25rem; }
+.about-code-watermark { display: none; }
 .profile-frame { position: relative; width: min(14rem,60vw); aspect-ratio: 4 / 5; margin: 0; margin-left: 4rem; left: 1.5rem; top: -3rem; overflow: hidden; color: var(--lily); border: 1  px solid rgba(226,226,218,.42); background: rgba(42,42,53,.09); isolation: isolate; box-shadow: 12px 12px 0 rgba(42,42,53,.14); }
 .profile-frame::before, .profile-frame::after { content: ''; position: absolute; z-index: 3; width: 2rem; height: 2rem; pointer-events: none; }
 .profile-frame::before { top: .7rem; left: .7rem; border-top: 1px solid var(--lily); border-left: 1px solid var(--lily); }
@@ -1862,6 +1863,39 @@ main > section + section {
     justify-content: center;
     border-top: 0;
   }
+
+  .about-code-watermark {
+    position: absolute;
+    z-index: 0;
+    top: calc(100svh - 3.5rem);
+    top: calc(100dvh - 3.5rem);
+    right: 1rem;
+    left: 2rem;
+    width: auto;
+    display: grid;
+    color: rgba(226,226,218,.11);
+    font: 500 clamp(1.25rem, 5vw, 2.2rem)/1.45 var(--font-mono);
+    letter-spacing: .04em;
+    transform: translateX(1rem);
+    pointer-events: none;
+  }
+
+  .about-code-watermark > div {
+    display: grid;
+    grid-template-columns: 4.5ch 1fr;
+    gap: .8em;
+  }
+
+  .about-code-watermark span {
+    padding-right: .7em;
+    text-align: right;
+    border-right: 1px solid currentColor;
+    opacity: .6;
+  }
+
+  .about-code-watermark code { color: inherit; font: inherit; white-space: pre; }
+  .about-narrative__identity,
+  .about-narrative__copy { position: relative; z-index: 1; }
 
   .about-narrative__copy p {
     font-size: clamp(1.15rem, min(5.3vw, 3vh), 1.4rem);
