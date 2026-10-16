@@ -62,10 +62,12 @@ const clampScale = (scale: number) => Math.min(1.6, Math.max(.65, scale))
 
 export function Technologies() {
   const [selected, setSelected] = useState('React')
+  const [inspectorOpen, setInspectorOpen] = useState(false)
   const [view, setView] = useState({ x: 0, y: 0, scale: 1 })
   const [dragging, setDragging] = useState(false)
   const viewportRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef<{ pointerId: number; x: number; y: number; originX: number; originY: number } | null>(null)
+  const suppressToolClickRef = useRef(false)
   const nodeRefs = useRef(new Map<string, HTMLButtonElement>())
   const current = tools[selected]
   const currentConnections = SHOW_TECH_RELATIONSHIPS ? connectionsFor(selected) : []
@@ -97,15 +99,20 @@ export function Technologies() {
     return () => viewport.removeEventListener('wheel', handleWheel)
   }, [])
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).closest('button')) return
+    if ((event.target as HTMLElement).closest('.tool-map-controls')) return
     event.currentTarget.setPointerCapture(event.pointerId)
     dragRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, originX: view.x, originY: view.y }
-    setDragging(true)
+    suppressToolClickRef.current = false
   }
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     const drag = dragRef.current
     if (!drag || drag.pointerId !== event.pointerId) return
-    setView((current) => ({ ...current, x: drag.originX + event.clientX - drag.x, y: drag.originY + event.clientY - drag.y }))
+    const deltaX = event.clientX - drag.x
+    const deltaY = event.clientY - drag.y
+    if (!suppressToolClickRef.current && Math.hypot(deltaX, deltaY) < 5) return
+    suppressToolClickRef.current = true
+    setDragging(true)
+    setView((current) => ({ ...current, x: drag.originX + deltaX, y: drag.originY + deltaY }))
   }
   const stopDragging = (event: React.PointerEvent<HTMLDivElement>) => {
     if (dragRef.current?.pointerId !== event.pointerId) return
@@ -118,6 +125,7 @@ export function Technologies() {
     const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? names.length - 1 : (index + (event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1) + names.length) % names.length
     const next = names[nextIndex]
     setSelected(next)
+    setInspectorOpen(true)
     nodeRefs.current.get(next)?.focus()
   }
 
@@ -140,12 +148,13 @@ export function Technologies() {
             {names.map((name, index) => {
               const info = tools[name]
               const state = selected === name ? ' tool-node--selected' : SHOW_TECH_RELATIONSHIPS && currentConnections.includes(name) ? ' tool-node--connected' : ''
-              return <button type="button" role="listitem" className={`tool-node tool-node--${index + 1}${state}`} aria-pressed={selected === name} onClick={() => setSelected(name)} onKeyDown={(event) => chooseWithKeyboard(event, index)} ref={(node) => { if (node) nodeRefs.current.set(name, node); else nodeRefs.current.delete(name) }} key={name}><span className={`tool-node__mark${info.fillLogo ? ' tool-node__mark--fill' : ''}${info.largeLogo ? ' tool-node__mark--large' : ''}`} aria-hidden="true"><img src={info.logo} alt="" /></span><span className="tool-node__category">{t(info.category)}</span><strong>{name}</strong></button>
+              return <button type="button" role="listitem" className={`tool-node tool-node--${index + 1}${state}`} aria-pressed={selected === name} onClick={() => { if (suppressToolClickRef.current) { suppressToolClickRef.current = false; return } setSelected(name); setInspectorOpen(true) }} onKeyDown={(event) => chooseWithKeyboard(event, index)} ref={(node) => { if (node) nodeRefs.current.set(name, node); else nodeRefs.current.delete(name) }} key={name}><span className={`tool-node__mark${info.fillLogo ? ' tool-node__mark--fill' : ''}${info.largeLogo ? ' tool-node__mark--large' : ''}`} aria-hidden="true"><img src={info.logo} alt="" /></span><span className="tool-node__category">{t(info.category)}</span><strong>{name}</strong></button>
             })}
           </div>
         </div>
 
-        <aside className="tool-inspector" aria-live="polite">
+        <aside className={`tool-inspector${inspectorOpen ? ' tool-inspector--open' : ''}`} aria-live="polite">
+          <button className="tool-inspector__close" type="button" onClick={() => setInspectorOpen(false)} aria-label={t('nav.close')}>×</button>
           <div className="tool-inspector__bar"><span>{t('tech.inspector')}</span><i /></div>
           <div className="tool-inspector__identity"><span className="tool-inspector__category">{t(current.category)}</span><span className={`tool-inspector__logo${current.fillLogo ? ' tool-inspector__logo--fill' : ''}${current.largeLogo ? ' tool-inspector__logo--large' : ''}`} aria-hidden="true"><img src={current.logo} alt="" /></span></div>
           <h3>{selected}</h3><p>{t(current.description)}</p>

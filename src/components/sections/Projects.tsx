@@ -83,7 +83,16 @@ export function Projects() {
   const description = t(`${prefix}.description` as TranslationKey)
   const contribution = t(`${prefix}.contribution` as TranslationKey)
   const tabLabels = { preview: t('projects.preview'), overview: t('projects.overview'), stack: t('projects.stack') }
-  const chooseProject = (index: number) => { setActiveProject(index); setActiveTab('preview') }
+  const chooseProject = (index: number, revealDetails = false) => {
+    setActiveProject(index)
+    setActiveTab('preview')
+
+    if (revealDetails && window.matchMedia('(max-width: 820px)').matches) {
+      requestAnimationFrame(() => {
+        document.getElementById('project-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
+  }
 
   return (
     <section className="projects projects--explorer" id="proyectos" aria-labelledby="projects-title">
@@ -94,12 +103,12 @@ export function Projects() {
       </div>
       <div className="project-selector" role="tablist" aria-label={t('projects.select')}>
         {projects.map((item, index) => (
-          <button type="button" role="tab" aria-selected={activeProject === index} className={activeProject === index ? 'project-selector__item project-selector__item--active' : 'project-selector__item'} onClick={() => chooseProject(index)} key={item.id}>
+          <button type="button" role="tab" aria-selected={activeProject === index} className={activeProject === index ? 'project-selector__item project-selector__item--active' : 'project-selector__item'} onClick={() => chooseProject(index, true)} key={item.id}>
             <span>{item.index}</span><strong>{item.name}</strong><small>{t(`${item.id === 'rift-deck' ? 'project.rift' : 'project.myfinteem'}.eyebrow` as TranslationKey)}</small>
           </button>
         ))}
       </div>
-      <article className={`project-explorer project-explorer--${project.id}`} key={project.id}>
+      <article className={`project-explorer project-explorer--${project.id}`} id="project-detail" key={project.id}>
         <div className="project-explorer__copy">
           <p>{eyebrow}</p><h3>{project.name}</h3>
           <p className="project-explorer__description">{description}</p>
